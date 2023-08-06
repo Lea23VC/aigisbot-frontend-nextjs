@@ -10,16 +10,19 @@ const roboto = Roboto({
 const theme = createTheme({
   palette: {
     mode: 'dark',
+    primary: {
+      main: '#39b5dd',
+    },
   },
-  typography: {
-    fontFamily: roboto.style.fontFamily,
-  },
+  // typography: {
+  //   fontFamily: roboto.style.fontFamily,
+  // },
   components: {
     MuiAlert: {
       styleOverrides: {
         root: ({ ownerState }) => ({
           ...(ownerState.severity === 'info' && {
-            backgroundColor: '#60a5fa',
+            backgroundColor: '#39bcdd',
           }),
         }),
       },

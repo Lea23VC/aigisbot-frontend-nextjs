@@ -1,4 +1,6 @@
 /** @type {import('tailwindcss').Config} */
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
@@ -13,7 +15,16 @@ module.exports = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
         main: "url('/images/bg.jpg')",
       },
+      colors: {
+        'light-blue': '#39bcdd',
+      },
+      fontFamily: {
+        'minerva-modern': ['Minerva Modern'],
+      },
     },
   },
   plugins: [],
+  corePlugins: {
+    fontFamily: true,
+  },
 };

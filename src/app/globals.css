@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Minerva Modern';
+  font-weight: 400;
+  font-style: normal;
+  src: local(''),
+    url('/fonts/minerva-modern/Minerva_Modern_Regular.otf') format('otf');
+}
+
+@font-face {
+  font-family: 'Minerva Modern';
+  font-weight: 700;
+  font-style: normal;
+  src: local(''),
+    url('/fonts/minerva-modern/Minerva_Modern_Bold.otf') format('otf');
+}
+
+@font-face {
+  font-family: 'Minerva Modern';
+  font-weight: 400;
+  font-style: italic;
+  src: local(''),
+    url('/fonts/minerva-modern/Minerva_Modern_Italic.otf') format('otf');
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

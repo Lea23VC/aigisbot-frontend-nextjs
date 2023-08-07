@@ -27,6 +27,18 @@ const theme = createTheme({
         }),
       },
     },
+    MuiFormControl: {
+      styleOverrides: {
+        root: {
+          input: {
+            '&:-webkit-autofill': {
+              WebkitBoxShadow: '0 0 0 100px rgba(255, 0, 0, 0) inset',
+              WebkitTextFillColor: '#39b5dd',
+            },
+          },
+        },
+      },
+    },
   },
 });
 

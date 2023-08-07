@@ -8,15 +8,32 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import StyledTextField from '@/components/styledComponents/styledTextField';
+import { useMutation } from '@apollo/client/react/hooks';
+import LOGIN_MUTATION from '@/graphql/mutations/login.mutation.graphql';
+import { useEffect } from 'react';
+import axios from 'axios';
+import { AuthUser } from '@/ts/auth/authUser.type';
 
 export default function LoginForm() {
+  const [login, { data, loading, error }] = useMutation<{ login: AuthUser }>(
+    LOGIN_MUTATION,
+  );
+
+  useEffect(() => {}, []);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    login({
+      variables: {
+        email: data.get('email'),
+        password: data.get('password'),
+      },
+    })
+      .then(({ data }) => {
+        localStorage.setItem('token', data?.login?.token as string);
+      })
+      .catch((error) => {});
   };
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
@@ -32,6 +49,7 @@ export default function LoginForm() {
         autoFocus
         className="border border-light-blue"
         color="primary"
+        InputLabelProps={{ className: '!font-minerva-modern text-light-blue' }}
       />
       <StyledTextField
         margin="normal"
@@ -42,6 +60,7 @@ export default function LoginForm() {
         type="password"
         id="password"
         autoComplete="current-password"
+        InputLabelProps={{ className: '!font-minerva-modern text-light-blue' }}
       />
       <FormControlLabel
         control={

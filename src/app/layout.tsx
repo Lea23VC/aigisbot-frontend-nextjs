@@ -2,6 +2,7 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
+import { ApolloWrapper } from '@/apollo/client';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -18,7 +19,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ThemeRegistry>
-        <body className={`bg-main`}>{children}</body>
+        <ApolloWrapper>
+          <body className={`bg-main`}>{children}</body>
+        </ApolloWrapper>
       </ThemeRegistry>
     </html>
   );

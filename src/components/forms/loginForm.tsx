@@ -10,14 +10,16 @@ import Typography from '@mui/material/Typography';
 import StyledTextField from '@/components/styledComponents/styledTextField';
 import { useMutation } from '@apollo/client/react/hooks';
 import LOGIN_MUTATION from '@/graphql/mutations/login.mutation.graphql';
-import { useEffect } from 'react';
+import { useEffect, useContext } from 'react';
 import axios from 'axios';
 import { AuthUser } from '@/ts/auth/authUser.type';
+import { MainContext } from '@/context/MainContext';
 
 export default function LoginForm() {
   const [login, { data, loading, error }] = useMutation<{ login: AuthUser }>(
     LOGIN_MUTATION,
   );
+  const { setAuthUser, authUser } = useContext(MainContext);
 
   useEffect(() => {}, []);
 
@@ -32,6 +34,9 @@ export default function LoginForm() {
     })
       .then(({ data }) => {
         localStorage.setItem('token', data?.login?.token as string);
+        console.log('data?.login: ', data?.login);
+        setAuthUser(data?.login as AuthUser);
+        console.log('authUser: ', authUser);
       })
       .catch((error) => {});
   };

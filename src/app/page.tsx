@@ -1,11 +1,15 @@
-import Avatar from '@mui/material/Avatar';
+'use client';
 
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import LoginForm from '@/components/forms/loginForm';
+import { useContext } from 'react';
+import { MainContext } from '@/context/MainContext';
 export default function Home() {
-  return (
+  const { authUser } = useContext(MainContext);
+  return !authUser ? (
     <Box
       sx={{
         marginTop: 8,
@@ -26,5 +30,7 @@ export default function Home() {
       </Typography>
       <LoginForm />
     </Box>
+  ) : (
+    <div>Logged in</div>
   );
 }

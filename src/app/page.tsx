@@ -5,10 +5,28 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import LoginForm from '@/components/forms/loginForm';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { MainContext } from '@/context/MainContext';
+
+import { useMutation } from '@apollo/client/react/hooks';
+import VERIFY_MUTATION from '@/graphql/mutations/verify.mutation.graphql';
+import { AuthUser } from '@/ts/auth/authUser.type';
+import { GraphQLErrorResponse } from '@/ts/response/error.types';
+
 export default function Home() {
-  const { authUser } = useContext(MainContext);
+  const { authUser, setAuthUser } = useContext(MainContext);
+  const [verify, { data, loading, error }] = useMutation<{ verify: AuthUser }>(
+    VERIFY_MUTATION,
+  );
+
+  useEffect(() => {
+    verify()
+      .then(({ data }) => {
+        setAuthUser(data?.verify as AuthUser);
+      })
+      .catch((error) => {});
+  }, []);
+
   return !authUser ? (
     <Box
       sx={{

@@ -8,6 +8,7 @@ import {
   ApolloLink,
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
+import { setContext } from '@apollo/client/link/context';
 
 import { RetryLink } from '@apollo/client/link/retry';
 
@@ -21,6 +22,18 @@ import {
 function makeClient() {
   const httpLink = createHttpLink({
     uri: `${process.env.NEXT_PUBLIC_BACKEND_ENDPOINT}/graphql`,
+  });
+
+  const authLink = setContext((_, { headers }) => {
+    // get the authentication token from local storage if it exists
+    const token = localStorage.getItem('token');
+    // return the headers to the context so httpLink can read them
+    return {
+      headers: {
+        ...headers,
+        authorization: token ? `Bearer ${token}` : '',
+      },
+    };
   });
 
   const errorLink = onError(
@@ -51,16 +64,19 @@ function makeClient() {
 
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
+
     link:
       typeof window === 'undefined'
-        ? ApolloLink.from([
-            new SSRMultipartLink({
-              stripDefer: true,
-            }),
-            errorLink,
-            httpLink,
-          ])
-        : from([errorLink, httpLink]),
+        ? authLink.concat(
+            ApolloLink.from([
+              new SSRMultipartLink({
+                stripDefer: true,
+              }),
+              errorLink,
+              httpLink,
+            ]),
+          )
+        : authLink.concat(from([errorLink, httpLink])),
   });
 }
 

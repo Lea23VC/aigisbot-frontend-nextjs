@@ -11,13 +11,18 @@ import { MainContext } from '@/context/MainContext';
 import { useMutation } from '@apollo/client/react/hooks';
 import VERIFY_MUTATION from '@/graphql/mutations/verify.mutation.graphql';
 import { AuthUser } from '@/ts/auth/authUser.type';
-import AuthLayout from '@/components/layouts/authLayout';
+import LoginSection from '@/components/sections/auth/loginSection';
+import LoadingSection from '@/components/sections/feedback/loadingSection';
 
-export default function Home() {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { authUser, setAuthUser } = useContext(MainContext);
-  const [verify, { data, loading, error }] = useMutation<{ verify: AuthUser }>(
-    VERIFY_MUTATION,
-  );
+  const [verify, { data, loading, error, called }] = useMutation<{
+    verify: AuthUser;
+  }>(VERIFY_MUTATION);
 
   useEffect(() => {
     verify()
@@ -27,9 +32,11 @@ export default function Home() {
       .catch((error) => {});
   }, []);
 
-  return (
-    <AuthLayout>
-      <Box>Logged in</Box>
-    </AuthLayout>
+  return loading || !called ? (
+    <LoadingSection />
+  ) : authUser ? (
+    children
+  ) : (
+    <LoginSection />
   );
 }

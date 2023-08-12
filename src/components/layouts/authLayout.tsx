@@ -8,6 +8,8 @@ import VERIFY_MUTATION from '@/graphql/mutations/verify.mutation.graphql';
 import { AuthUser } from '@/ts/auth/authUser.type';
 import LoginSection from '@/components/sections/auth/loginSection';
 import LoadingSection from '@/components/sections/feedback/loadingSection';
+import Box from '@mui/material/Box';
+import Header from '../header';
 
 export default function AuthLayout({
   children,
@@ -30,7 +32,9 @@ export default function AuthLayout({
   return loading || !called ? (
     <LoadingSection />
   ) : authUser ? (
-    children
+    <Box>
+      <Header /> {children}
+    </Box>
   ) : (
     <LoginSection />
   );

@@ -33,6 +33,13 @@
     url('/fonts/minerva-modern/Minerva_Modern_Italic.otf') format('otf');
 }
 
+@font-face {
+  font-family: 'BM Space';
+  font-weight: 400;
+  font-style: normal;
+  src: local(''), url('/fonts/bm-space/bmspa.ttf');
+}
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;

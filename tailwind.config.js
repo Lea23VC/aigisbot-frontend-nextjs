@@ -2,6 +2,7 @@
 const plugin = require('tailwindcss/plugin');
 
 module.exports = {
+  important: true,
   content: [
     './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -20,6 +21,7 @@ module.exports = {
       },
       fontFamily: {
         'minerva-modern': ['Minerva Modern'],
+        'bm-space': ['BM Space'],
       },
     },
   },

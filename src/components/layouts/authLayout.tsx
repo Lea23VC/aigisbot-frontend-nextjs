@@ -1,10 +1,5 @@
 'use client';
 
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Typography from '@mui/material/Typography';
-import LoginForm from '@/components/forms/loginForm';
 import { useContext, useEffect } from 'react';
 import { MainContext } from '@/context/MainContext';
 
@@ -20,7 +15,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   const { authUser, setAuthUser } = useContext(MainContext);
-  const [verify, { data, loading, error, called }] = useMutation<{
+  const [verify, { loading, error, called }] = useMutation<{
     verify: AuthUser;
   }>(VERIFY_MUTATION);
 

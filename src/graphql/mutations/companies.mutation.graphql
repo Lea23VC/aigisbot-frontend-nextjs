@@ -1,0 +1,13 @@
+{
+  companies {
+    id
+    name
+    consoles {
+      id
+      name
+      fullname
+      created_at
+      updated_at
+    }
+  }
+}
